@@ -2,196 +2,89 @@ import streamlit as st
 
 st.set_page_config(layout="wide", page_title="UI Clone")
 
-# Inject Google Fonts and custom CSS for style and layout
+# MARK: Custom CSS
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 .stApp { background: #f5f5f7 !important; font-family: 'Inter', sans-serif !important; }
 #MainMenu, footer, header {display: none;}
-
 .sidebar-icons {
-    position: fixed;
-    left: 20px;
-    top: 36px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    z-index: 100;
+    position: fixed; left: 20px; top: 36px; display: flex; flex-direction: column; gap: 20px; z-index: 100;
 }
 .sidebar-icon {
-    width: 44px;
-    height: 44px;
-    background: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(60,64,67,.11);
+    width: 44px; height: 44px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(60,64,67,.11);
 }
-
 .user-avatar {
-    position: fixed;
-    left: 24px;
-    bottom: 24px;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: 2px solid #eee;
-    background: url('https://randomuser.me/api/portraits/men/65.jpg');
-    background-size: cover;
-    background-position: center;
-    z-index: 101;
+    position: fixed; left: 24px; bottom: 24px; width: 38px; height: 38px; border-radius: 50%; border: 2px solid #eee;
+    background: url('https://randomuser.me/api/portraits/men/65.jpg'); background-size: cover; background-position: center; z-index: 101;
 }
-
 .main-header {
-    font-size: 2.6rem;
-    font-weight: 700;
-    margin-top: 68px; margin-bottom: 0px;
-    margin-left: 300px;
-    color: #18181b; font-family: 'Inter', sans-serif;
+    font-size: 2.6rem; font-weight: 700; margin-top: 68px; margin-bottom: 0px; margin-left: 300px; color: #18181b; font-family: 'Inter', sans-serif;
 }
 .main-header .username { color: #C078DD; }
-
 .gradient-header {
-    font-size: 2.3rem;
-    font-weight: 700;
-    margin-left: 300px;
-    margin-bottom: 14px;
-    font-family: 'Inter', sans-serif;
+    font-size: 2.3rem; font-weight: 700; margin-left: 300px; margin-bottom: 14px; font-family: 'Inter', sans-serif;
     background: linear-gradient(90deg,#18181b 18%, #7a5af8 75%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-
 .subtitle {
-    margin-left: 300px;
-    font-size: 1.04rem;
-    color: #6F6F7C;
-    margin-bottom: 32px;
-    font-weight: 400;
+    margin-left: 300px; font-size: 1.04rem; color: #6F6F7C; margin-bottom: 32px; font-weight: 400;
 }
-
 .prompt-row {
-    display: flex;
-    gap: 28px;
-    margin-left: 300px;
-    margin-bottom: 26px;
+    display: flex; gap: 28px; margin-left: 300px; margin-bottom: 26px;
 }
-
 .prompt-card {
-    background: #fff;
-    border-radius: 15px;
-    min-width: 236px;
-    box-shadow: 0 1px 9px rgba(60,64,67,.13);
-    padding: 23px 25px;
-    font-size: 1.08rem;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    color: #191921;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background: #fff; border-radius: 15px; min-width: 236px; box-shadow: 0 1px 9px rgba(60,64,67,.13); padding: 23px 25px; font-size: 1.08rem; font-family: 'Inter', sans-serif; font-weight: 500; color: #191921;
+    display: flex; justify-content: space-between; align-items: center;
 }
 .prompt-card svg { width: 17px; height: 17px; }
-
 .refresh-row {
-    margin-left: 300px;
-    font-size: 0.99rem;
-    color: #bcbcdc;
-    margin-bottom: 6px;
-    margin-top: -10px;
-    display: flex;
-    align-items:center;
+    margin-left: 300px; font-size: 0.99rem; color: #bcbcdc; margin-bottom: 6px; margin-top: -10px; display: flex; align-items:center;
 }
 .refresh-row svg { vertical-align: middle; margin-right: 4px; }
-
 .input-bar-holder {
-    margin-left: 300px;
-    margin-top: 28px;
+    margin-left: 300px; margin-top: 28px;
 }
 .input-bar {
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 1px 8px rgba(60,64,67,.08);
-    padding: 22px 28px;
-    font-family: 'Inter', sans-serif;
-    font-size: 1.08rem;
-    font-weight: 400;
-    width: 690px;
-    min-width: 350px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin-bottom: 38px;
+    background: #fff; border-radius: 15px; box-shadow: 0 1px 8px rgba(60,64,67,.08); padding: 22px 28px; font-family: 'Inter', sans-serif; font-size: 1.08rem; font-weight: 400;
+    width: 690px; min-width: 350px; display: flex; flex-direction: column; position: relative; margin-bottom: 38px;
 }
-.input-bar-placeholder {
-    color: #b9b9c9;
-    margin-bottom: 8px;
-}
-.input-bar-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-.input-bar-opts {
-    color: #9a9aaa;
-    font-size: 1rem;
-}
+.input-bar-placeholder { color: #b9b9c9; margin-bottom: 8px; }
+.input-bar-row { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+.input-bar-opts { color: #9a9aaa; font-size: 1rem; }
 .input-bar-opts svg { vertical-align: middle; margin-right: 4px; }
-.input-bar-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
+.input-bar-right { display: flex; align-items: center; gap: 20px; }
 .input-bar-web {
-    color: #5c5e80;
-    font-size: 1.05rem;
-    background:#f7f6fa;
-    padding: 6px 12px;
-    border-radius: 9px;
-    box-shadow: 0 1px 2px rgba(60,64,67,.09);
-    font-weight: 500;
-    display:inline-flex;
-    align-items: center;
+    color: #5c5e80; font-size: 1.05rem; background:#f7f6fa; padding: 6px 12px; border-radius: 9px; box-shadow: 0 1px 2px rgba(60,64,67,.09);
+    font-weight: 500; display:inline-flex; align-items: center;
 }
-.input-bar-count {
-    color: #b9b9c9;
-    font-size: 0.97rem;
-}
+.input-bar-count { color: #b9b9c9; font-size: 0.97rem; }
 .input-bar-send-btn {
-    background: #7a5af8;
-    border-radius: 50%;
-    width: 27px;
-    height: 27px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.11rem; color: #fff;
-    box-shadow: 0 1px 7px rgba(60,64,67,.10);
-    cursor: pointer; transition: background .2s;
+    background: #7a5af8; border-radius: 50%; width: 27px; height: 27px; display: flex; align-items: center; justify-content: center; font-size: 1.11rem; color: #fff; box-shadow: 0 1px 7px rgba(60,64,67,.10); cursor: pointer; transition: background .2s;
 }
 .input-bar-send-btn:hover { background: #9a7ffe; }
 </style>
 """, unsafe_allow_html=True)
 
-# Sidebar icons (SVG)
+# MARK: Sidebar icons
 st.markdown("""
 <div class='sidebar-icons'>
-    <div class='sidebar-icon'>
-        <svg fill="none" viewBox="0 0 24 24"><rect fill="#e8e6fb" width="16" height="16" x="4" y="4" rx="4"/><rect fill="#d3d0ed" width="6" height="6" x="4" y="4" rx="2"/></svg>
-    </div>
-    <div class='sidebar-icon'>
-        <svg fill="none" viewBox="0 0 24 24"><rect fill="#e8e6fb" width="16" height="10" x="4" y="6" rx="4"/><rect fill="#d3d0ed" width="10" height="4" x="7" y="9" rx="2"/></svg>
-    </div>
-    <div class='sidebar-icon'>
-        <svg fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="#e8e6fb"/><circle cx="12" cy="12" r="4" fill="#d3d0ed"/></svg>
-    </div>
+  <div class='sidebar-icon'>
+    <svg fill="none" viewBox="0 0 24 24"><rect fill="#e8e6fb" width="16" height="16" x="4" y="4" rx="4"/><rect fill="#d3d0ed" width="6" height="6" x="4" y="4" rx="2"/></svg>
+  </div>
+  <div class='sidebar-icon'>
+    <svg fill="none" viewBox="0 0 24 24"><rect fill="#e8e6fb" width="16" height="10" x="4" y="6" rx="4"/><rect fill="#d3d0ed" width="10" height="4" x="7" y="9" rx="2"/></svg>
+  </div>
+  <div class='sidebar-icon'>
+    <svg fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="#e8e6fb"/><circle cx="12" cy="12" r="4" fill="#d3d0ed"/></svg>
+  </div>
 </div>
 """, unsafe_allow_html=True)
 
-# Avatar
+# MARK: Avatar
 st.markdown("""<div class="user-avatar"></div>""", unsafe_allow_html=True)
 
-# Header section
+# MARK: Header section
 st.markdown("""
 <div class='main-header'>
     Hi there, <span class='username'>John</span>
@@ -204,7 +97,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Prompt cards row
+# MARK: Prompt cards row
 st.markdown("""
 <div class='prompt-row'>
     <div class='prompt-card'>
@@ -226,7 +119,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Refresh row
+# MARK: Refresh row
 st.markdown("""
 <div class="refresh-row">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1 1 8 8" stroke="#bcbcdc" stroke-width="2" stroke-linecap="round"/><path d="M4 12h5v5" stroke="#bcbcdc" stroke-width="2" stroke-linecap="round"/></svg>
@@ -234,7 +127,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Input section
+# MARK: Input section
 st.markdown("""
 <div class="input-bar-holder">
     <div class="input-bar">
