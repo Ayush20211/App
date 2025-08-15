@@ -1,102 +1,89 @@
 import streamlit as st
 
-# ---- Google Fonts for Inter ----
+st.set_page_config(layout="wide", page_title="UI Clone")
+
+# Inject Google Fonts and custom CSS for style and layout
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body, html, .stApp { font-family: 'Inter', sans-serif !important; }
+.stApp { background: #f5f5f7 !important; font-family: 'Inter', sans-serif !important; }
+#MainMenu, footer, header {display: none;}
 
-/* Custom background */
-.stApp { background-color: #f5f5f7; }
-
-/* Hide default Streamlit sidebar and hamburger/footer */
-#MainMenu, footer {visibility: hidden;}
-header {visibility: hidden;}
-
-/* Sidebar icons */
 .sidebar-icons {
     position: fixed;
-    top: 32px;
-    left: 24px;
+    left: 20px;
+    top: 36px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    z-index: 9999;
+    gap: 20px;
+    z-index: 100;
 }
 .sidebar-icon {
-    background: #fff;
-    border-radius: 50%;
     width: 44px;
     height: 44px;
+    background: #fff;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(60,64,67,.12);
-    border: none;
-    transition: box-shadow 0.2s;
-}
-.sidebar-icon:hover {
-    box-shadow: 0 6px 16px rgba(60,64,67,.16);
+    box-shadow: 0 2px 8px rgba(60,64,67,.11);
 }
 
-/* Avatar */
 .user-avatar {
     position: fixed;
     left: 24px;
     bottom: 24px;
-    width: 37px;
-    height: 37px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    border: 1.5px solid #eaeaea;
-    background: url('https://randomuser.me/api/portraits/men/65.jpg') center center/cover;
-    z-index: 9999;
+    border: 2px solid #eee;
+    background: url('https://randomuser.me/api/portraits/men/65.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 101;
 }
 
-/* Main header */
 .main-header {
     font-size: 2.6rem;
     font-weight: 700;
-    margin-top: 68px;
-    margin-bottom: 3px;
-    margin-left: 320px;
-    color: #18181b;
-    font-family: 'Inter', sans-serif;
+    margin-top: 68px; margin-bottom: 0px;
+    margin-left: 300px;
+    color: #18181b; font-family: 'Inter', sans-serif;
 }
-.main-header .username { color: #C078DD;}
+.main-header .username { color: #C078DD; }
 
-/* Gradient header */
 .gradient-header {
     font-size: 2.3rem;
     font-weight: 700;
-    margin-left: 320px;
-    margin-bottom: 17px;
+    margin-left: 300px;
+    margin-bottom: 14px;
     font-family: 'Inter', sans-serif;
-    background: -webkit-linear-gradient(90deg,#18181b 12%, #7a5af8 70%);
+    background: linear-gradient(90deg,#18181b 18%, #7a5af8 75%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
-    margin-left: 320px;
+    margin-left: 300px;
     font-size: 1.04rem;
     color: #6F6F7C;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
     font-weight: 400;
 }
 
 .prompt-row {
     display: flex;
-    gap: 30px;
-    margin-left: 320px;
-    margin-bottom: 22px;
+    gap: 28px;
+    margin-left: 300px;
+    margin-bottom: 26px;
 }
 
 .prompt-card {
     background: #fff;
     border-radius: 15px;
-    min-width: 233px;
-    box-shadow: 0 1px 8px rgba(60,64,67,.13);
-    padding: 21px 24px;
+    min-width: 236px;
+    box-shadow: 0 1px 9px rgba(60,64,67,.13);
+    padding: 23px 25px;
     font-size: 1.08rem;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
@@ -105,39 +92,37 @@ header {visibility: hidden;}
     justify-content: space-between;
     align-items: center;
 }
-.prompt-card svg { width: 18px; height: 18px; }
+.prompt-card svg { width: 17px; height: 17px; }
 
-/* Refresh button */
 .refresh-row {
-    margin-left: 320px;
-    font-size: 0.96rem;
+    margin-left: 300px;
+    font-size: 0.99rem;
     color: #bcbcdc;
-    margin-bottom: 8px;
-    margin-top: -12px;
+    margin-bottom: 6px;
+    margin-top: -10px;
     display: flex;
     align-items:center;
 }
 .refresh-row svg { vertical-align: middle; margin-right: 4px; }
 
-/* Input area */
 .input-bar-holder {
-    margin-left: 320px;
-    margin-top: 36px;
+    margin-left: 300px;
+    margin-top: 28px;
 }
 .input-bar {
     background: #fff;
     border-radius: 15px;
-    box-shadow: 0 1px 8px rgba(60,64,67,.10);
-    padding: 22px 26px;
+    box-shadow: 0 1px 8px rgba(60,64,67,.08);
+    padding: 22px 28px;
     font-family: 'Inter', sans-serif;
-    font-size: 1.09rem;
+    font-size: 1.08rem;
     font-weight: 400;
-    width: 750px;
+    width: 690px;
     min-width: 350px;
     display: flex;
     flex-direction: column;
     position: relative;
-    margin-bottom: 44px;
+    margin-bottom: 38px;
 }
 .input-bar-placeholder {
     color: #b9b9c9;
@@ -153,20 +138,17 @@ header {visibility: hidden;}
     color: #9a9aaa;
     font-size: 1rem;
 }
-.input-bar-opts svg {
-    vertical-align: middle;
-    margin-right: 4px;
-}
+.input-bar-opts svg { vertical-align: middle; margin-right: 4px; }
 .input-bar-right {
     display: flex;
     align-items: center;
-    gap: 22px;
+    gap: 20px;
 }
 .input-bar-web {
     color: #5c5e80;
     font-size: 1.05rem;
     background:#f7f6fa;
-    padding: 6px 11px;
+    padding: 6px 12px;
     border-radius: 9px;
     box-shadow: 0 1px 2px rgba(60,64,67,.09);
     font-weight: 500;
@@ -180,24 +162,18 @@ header {visibility: hidden;}
 .input-bar-send-btn {
     background: #7a5af8;
     border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items:center;
-    justify-content:center;
-    font-size: 1.25rem;
-    color: #fff;
+    width: 27px;
+    height: 27px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.11rem; color: #fff;
     box-shadow: 0 1px 7px rgba(60,64,67,.10);
-    cursor: pointer;
-    transition: background .2s;
+    cursor: pointer; transition: background .2s;
 }
-.input-bar-send-btn:hover {
-    background: #9a7ffe;
-}
+.input-bar-send-btn:hover { background: #9a7ffe; }
 </style>
 """, unsafe_allow_html=True)
 
-# ---- Sidebar ----
+# Sidebar icons (SVG)
 st.markdown("""
 <div class='sidebar-icons'>
     <div class='sidebar-icon'>
@@ -212,10 +188,10 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ---- Avatar ----
+# Avatar
 st.markdown("""<div class="user-avatar"></div>""", unsafe_allow_html=True)
 
-# ---- Main Header ----
+# Header section
 st.markdown("""
 <div class='main-header'>
     Hi there, <span class='username'>John</span>
@@ -228,7 +204,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ---- Prompt Cards ----
+# Prompt cards row
 st.markdown("""
 <div class='prompt-row'>
     <div class='prompt-card'>
@@ -250,7 +226,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ---- Refresh Prompts ----
+# Refresh row
 st.markdown("""
 <div class="refresh-row">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1 1 8 8" stroke="#bcbcdc" stroke-width="2" stroke-linecap="round"/><path d="M4 12h5v5" stroke="#bcbcdc" stroke-width="2" stroke-linecap="round"/></svg>
@@ -258,7 +234,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ---- User Input Bar ----
+# Input section
 st.markdown("""
 <div class="input-bar-holder">
     <div class="input-bar">
