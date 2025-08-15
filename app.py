@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(layout="wide", page_title="UI Clone")
+st.set_page_config(layout="wide", page_title="Resume Demo")
 
 # MARK: Custom CSS
 st.markdown("""
@@ -87,10 +87,10 @@ st.markdown("""<div class="user-avatar"></div>""", unsafe_allow_html=True)
 # MARK: Header section
 st.markdown("""
 <div class='main-header'>
-    Hi there, <span class='username'>John</span>
+    Hi there, <span class='username'>Anish</span>
 </div>
 <div class='gradient-header'>
-    What would like to know?
+    Aa ja Japan chalte hai?
 </div>
 <div class='subtitle'>
     Use one of the most common prompts below or use your own to begin
