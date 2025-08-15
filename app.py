@@ -1,195 +1,284 @@
 import streamlit as st
 
-st.set_page_config(layout="wide")
-
-# Custom CSS for exact look
+# ---- Google Fonts for Inter ----
 st.markdown("""
-    <style>
-    /* Page */
-    .stApp { background-color: #f5f5f7; }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body, html, .stApp { font-family: 'Inter', sans-serif !important; }
 
-    /* Remove default Streamlit padding */
-    [data-testid="stVerticalBlock"] > div:first-child { padding-top: 0px; }
-    
-    /* Avatar */
-    .user-avatar {
-        position: fixed;
-        left: 24px;
-        bottom: 24px;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: 2px solid #eee;
-        background-image: url('https://randomuser.me/api/portraits/men/65.jpg');
-        background-size: cover;
-        background-position: center;
-        z-index: 99999;
-    }
-    
-    /* Sidebar icons */
-    .sidebar-icon-holder {
-        position: fixed;
-        left: 20px;
-        top: 70px;
-        display: flex;
-        flex-direction: column;
-        gap: 22px;
-        z-index: 99998;
-    }
-    .sidebar-icon {
-        width: 40px;
-        height: 40px;
-        background: #fff;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 1px 6px rgba(60,64,67,.12);
-        margin-bottom: 1px;
-        border: 2px solid #f3effc;
-    }
-    
-    /* Header styles */
-    .big-header {
-        font-size: 2.8rem;
-        font-weight: 700;
-        margin-top: 70px;
-        margin-bottom: 0.5rem;
-        margin-left: 11vw;
-        font-family: 'Inter', sans-serif;
-        color: #18181b;
-        text-shadow: 0px 1px 3px rgba(0,0,0,0.04);
-    }
-    .big-header .username {
-        color: #d387e8;
-    }
-    .gradient-header {
-        font-size: 2.3rem;
-        font-weight: 700;
-        margin-left: 11vw;
-        font-family: 'Inter', sans-serif;
-        background: linear-gradient(90deg,#18181b 50%,#7a5af8 80%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-fill-color: transparent;
-        margin-bottom: 2.5rem;
-    }
-    .subtitle {
-        margin-left: 11vw;
-        margin-bottom: 24px;
-        font-size: 1rem;
-        color: #888;
-        font-family: 'Inter', sans-serif;
-    }
-    /* Prompt Cards */
-    .prompt-row {
-        display: flex;
-        gap: 38px;
-        margin-bottom: 2rem;
-        margin-left: 11vw;
-    }
-    .prompt-card {
-        background: #fff;
-        border-radius: 16px;
-        min-width: 250px;
-        box-shadow: 0 1px 8px rgba(60,64,67,.16);
-        padding: 28px 32px;
-        font-size: 1.05rem;
-        font-family: 'Inter', sans-serif;
-        font-weight: 500;
-        color: #18181b;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: box-shadow .2s;
-        cursor: pointer;
-    }
-    .prompt-card:hover {
-        box-shadow: 0 9px 20px rgba(60,64,67,.18);
-    }
-    .prompt-card svg {
-        width: 22px;
-        height: 22px;
-    }
+/* Custom background */
+.stApp { background-color: #f5f5f7; }
 
-    /* Prompt Input Bar */
-    .prompt-input-bar {
-        background: #fff;
-        border-radius: 16px;
-        margin-left: 11vw;
-        width: 78vw;
-        box-shadow: 0 1px 8px rgba(60,64,67,.10);
-        padding: 24px 32px;
-        font-family: 'Inter', sans-serif;
-        font-size: 1.11rem;
-        font-weight: 400;
-        margin-bottom: 42px;
-        display: flex;
-        flex-direction: column;
-    }
-    .attach-row {
-        font-size: 0.97rem;
-        color: #888;
-        margin-top: 6px;
-        letter-spacing: 0.15px;
-    }
-    /* Hide Streamlit hamburger and footer */
-    #MainMenu, footer {visibility: hidden;}
-    </style>
+/* Hide default Streamlit sidebar and hamburger/footer */
+#MainMenu, footer {visibility: hidden;}
+header {visibility: hidden;}
+
+/* Sidebar icons */
+.sidebar-icons {
+    position: fixed;
+    top: 32px;
+    left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    z-index: 9999;
+}
+.sidebar-icon {
+    background: #fff;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(60,64,67,.12);
+    border: none;
+    transition: box-shadow 0.2s;
+}
+.sidebar-icon:hover {
+    box-shadow: 0 6px 16px rgba(60,64,67,.16);
+}
+
+/* Avatar */
+.user-avatar {
+    position: fixed;
+    left: 24px;
+    bottom: 24px;
+    width: 37px;
+    height: 37px;
+    border-radius: 50%;
+    border: 1.5px solid #eaeaea;
+    background: url('https://randomuser.me/api/portraits/men/65.jpg') center center/cover;
+    z-index: 9999;
+}
+
+/* Main header */
+.main-header {
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin-top: 68px;
+    margin-bottom: 3px;
+    margin-left: 320px;
+    color: #18181b;
+    font-family: 'Inter', sans-serif;
+}
+.main-header .username { color: #C078DD;}
+
+/* Gradient header */
+.gradient-header {
+    font-size: 2.3rem;
+    font-weight: 700;
+    margin-left: 320px;
+    margin-bottom: 17px;
+    font-family: 'Inter', sans-serif;
+    background: -webkit-linear-gradient(90deg,#18181b 12%, #7a5af8 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    margin-left: 320px;
+    font-size: 1.04rem;
+    color: #6F6F7C;
+    margin-bottom: 28px;
+    font-weight: 400;
+}
+
+.prompt-row {
+    display: flex;
+    gap: 30px;
+    margin-left: 320px;
+    margin-bottom: 22px;
+}
+
+.prompt-card {
+    background: #fff;
+    border-radius: 15px;
+    min-width: 233px;
+    box-shadow: 0 1px 8px rgba(60,64,67,.13);
+    padding: 21px 24px;
+    font-size: 1.08rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #191921;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.prompt-card svg { width: 18px; height: 18px; }
+
+/* Refresh button */
+.refresh-row {
+    margin-left: 320px;
+    font-size: 0.96rem;
+    color: #bcbcdc;
+    margin-bottom: 8px;
+    margin-top: -12px;
+    display: flex;
+    align-items:center;
+}
+.refresh-row svg { vertical-align: middle; margin-right: 4px; }
+
+/* Input area */
+.input-bar-holder {
+    margin-left: 320px;
+    margin-top: 36px;
+}
+.input-bar {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 1px 8px rgba(60,64,67,.10);
+    padding: 22px 26px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.09rem;
+    font-weight: 400;
+    width: 750px;
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 44px;
+}
+.input-bar-placeholder {
+    color: #b9b9c9;
+    margin-bottom: 8px;
+}
+.input-bar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.input-bar-opts {
+    color: #9a9aaa;
+    font-size: 1rem;
+}
+.input-bar-opts svg {
+    vertical-align: middle;
+    margin-right: 4px;
+}
+.input-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+.input-bar-web {
+    color: #5c5e80;
+    font-size: 1.05rem;
+    background:#f7f6fa;
+    padding: 6px 11px;
+    border-radius: 9px;
+    box-shadow: 0 1px 2px rgba(60,64,67,.09);
+    font-weight: 500;
+    display:inline-flex;
+    align-items: center;
+}
+.input-bar-count {
+    color: #b9b9c9;
+    font-size: 0.97rem;
+}
+.input-bar-send-btn {
+    background: #7a5af8;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 1.25rem;
+    color: #fff;
+    box-shadow: 0 1px 7px rgba(60,64,67,.10);
+    cursor: pointer;
+    transition: background .2s;
+}
+.input-bar-send-btn:hover {
+    background: #9a7ffe;
+}
+</style>
 """, unsafe_allow_html=True)
 
-# --- SIDEBAR ICONS (SVG for smooth look) ---
+# ---- Sidebar ----
 st.markdown("""
-<div class="sidebar-icon-holder">
-    <div class="sidebar-icon"><svg height="22" width="22" viewBox="0 0 24 24"><path fill="#d387e8" d="M3 13h2v-2H3v2zm7-8h2V3h-2v2zm8 8h2v-2h-2v2zM3 21h18V3H3v18zm2-2V5h14v14H5zm2-2h10v-2H7v2zm10 2H7v2h10v-2z"/><title>dashboard</title></svg></div>
-    <div class="sidebar-icon"><svg height="22" width="22" viewBox="0 0 24 24"><path fill="#7a5af8" d="M3 3v18h18V3H3zm16 16H5V5h14v14z"/><title>folder</title></svg></div>
-    <div class="sidebar-icon"><svg height="22" width="22" viewBox="0 0 24 24"><path fill="#7a5af8" d="M21 7v10c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2z"/><title>message</title></svg></div>
+<div class='sidebar-icons'>
+    <div class='sidebar-icon'>
+        <svg fill="none" viewBox="0 0 24 24"><rect fill="#e8e6fb" width="16" height="16" x="4" y="4" rx="4"/><rect fill="#d3d0ed" width="6" height="6" x="4" y="4" rx="2"/></svg>
+    </div>
+    <div class='sidebar-icon'>
+        <svg fill="none" viewBox="0 0 24 24"><rect fill="#e8e6fb" width="16" height="10" x="4" y="6" rx="4"/><rect fill="#d3d0ed" width="10" height="4" x="7" y="9" rx="2"/></svg>
+    </div>
+    <div class='sidebar-icon'>
+        <svg fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="#e8e6fb"/><circle cx="12" cy="12" r="4" fill="#d3d0ed"/></svg>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
-# --- AVATAR ---
+# ---- Avatar ----
 st.markdown("""<div class="user-avatar"></div>""", unsafe_allow_html=True)
 
-# --- HEADERS ---
+# ---- Main Header ----
 st.markdown("""
-<div class="big-header">
-    Hi there, <span class="username">John</span>
+<div class='main-header'>
+    Hi there, <span class='username'>John</span>
 </div>
-<div class="gradient-header">
+<div class='gradient-header'>
     What would like to know?
 </div>
-<div class="subtitle">
+<div class='subtitle'>
     Use one of the most common prompts below or use your own to begin
 </div>
 """, unsafe_allow_html=True)
 
-# --- PROMPTS ---
+# ---- Prompt Cards ----
 st.markdown("""
-<div class="prompt-row">
-    <div class="prompt-card">
-        Write a to-do list for a personal project or task 
-        <svg viewBox="0 0 24 24"><path fill="#d387e8" d="M3 17.25V21h3.75l11.06-11.06-3.74-3.74L3 17.25zm15.36-9.09c.39-.39.39-1.02 0-1.41l-2.12-2.12a1 1 0 0 0-1.41 0l-1.83 1.83 3.54 3.54 1.82-1.83z"/></svg>
+<div class='prompt-row'>
+    <div class='prompt-card'>
+        Write a to-do list for a personal project or task
+        <svg fill="none" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="4" fill="#f3eccf"/><path d="M7 8.5h10M7 12h6M7 15.5h5" stroke="#c4a856" stroke-width="1.3" stroke-linecap="round"/></svg>
     </div>
-    <div class="prompt-card">
-        Generate an email to reply to a job offer 
-        <svg viewBox="0 0 24 24"><path fill="#7a5af8" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4.4-8 5.2-8-5.2V6l8 5.2L20 6v2.4z"/></svg>
+    <div class='prompt-card'>
+        Generate an email to reply to a job offer
+        <svg fill="none" viewBox="0 0 24 24"><rect width="18" height="14" x="3" y="5" rx="4" fill="#e6e9f9"/><path d="M3 5l9 7 9-7" stroke="#8167d6" stroke-width="1.3"/></svg>
     </div>
-    <div class="prompt-card">
-        Summarise this article or text for me in one paragraph 
-        <svg viewBox="0 0 24 24"><path fill="#b6a6e9" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5v-2h14v2zm0-4H5v-2h14v2zm0-4H5V9h14v2zm0-4H5V5h14v2z"/></svg>
+    <div class='prompt-card'>
+        Summarise this article or text for me in one paragraph
+        <svg fill="none" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="13" rx="3.5" fill="#e6e7e9"/><path d="M7 9h10M7 13h5" stroke="#9696b7" stroke-width="1.3" stroke-linecap="round"/></svg>
     </div>
-    <div class="prompt-card">
+    <div class='prompt-card'>
         How does AI work in a technical capacity
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#fca7ea"/><text x="12" y="16" fill="#fff" font-size="10" text-anchor="middle" font-family="Arial">AI</text></svg>
+        <svg fill="none" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="6" fill="#f6d3ef"/><path d="M9 12h6M12 9v6" stroke="#e163b2" stroke-width="1.3" stroke-linecap="round"/></svg>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# --- PROMPT BAR ---
+# ---- Refresh Prompts ----
 st.markdown("""
-<div class="prompt-input-bar">
-    Ask whatever you want....<br>
-    <span class="attach-row">◦ Add Attachment &nbsp; ◦ Use Image</span>
+<div class="refresh-row">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1 1 8 8" stroke="#bcbcdc" stroke-width="2" stroke-linecap="round"/><path d="M4 12h5v5" stroke="#bcbcdc" stroke-width="2" stroke-linecap="round"/></svg>
+    Refresh Prompts
+</div>
+""", unsafe_allow_html=True)
+
+# ---- User Input Bar ----
+st.markdown("""
+<div class="input-bar-holder">
+    <div class="input-bar">
+        <div class="input-bar-placeholder">Ask whatever you want....</div>
+        <div class="input-bar-row">
+            <div class="input-bar-opts">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="6" stroke="#b9b9c9" stroke-width="2"/><title>Add Attachment</title></svg>
+                Add Attachment &nbsp; •&nbsp; Use Image
+            </div>
+            <div class="input-bar-right">
+                <span class="input-bar-web">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="6" stroke="#a098d0" stroke-width="2"/><title>Web</title></svg>
+                    All Web
+                </span>
+                <span class="input-bar-count">0/1000</span>
+                <span class="input-bar-send-btn">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M5 12l14-6-6 14-2-5-6-3z" fill="#fff"/><title>Send</title></svg>
+                </span>
+            </div>
+        </div>
+    </div>
 </div>
 """, unsafe_allow_html=True)
